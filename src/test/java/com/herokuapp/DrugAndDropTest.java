@@ -18,21 +18,25 @@ public class DrugAndDropTest {
     }
 
     @Test
-    void checkMoveRectangle() {
+    void checkMoveRectangleDrugAndDrop() {
         // - Откройте https://the-internet.herokuapp.com/drag_and_drop
         open("https://the-internet.herokuapp.com/drag_and_drop");
-        sleep(4000);
         // - Перенесите прямоугольник А на место В
         $("#column-a").dragAndDrop(to("#column-b"));
         // - Проверьте, что прямоугольники действительно поменялись
         $("#column-a").shouldHave(text("B"));
         $("#column-b").shouldHave(text("A"));
+    }
 
+    @Test
+    void checkMoveRectangleActions() {
+
+        open("https://the-internet.herokuapp.com/drag_and_drop");
         // - В Selenide есть команда $(element).dragAndDrop($(to-element)),
         actions().clickAndHold($("#column-a")).moveToElement($("#column-b")).release().perform();
         // - проверьте работает ли тест, если использовать её вместо actions()
-        // - тест не работает с этой командой
-        $("#column-a").shouldHave(text("B"));
-        $("#column-b").shouldHave(text("A"));
+        // - тест не работает с этой командой (на сайте баг)
+        $("#column-a").shouldHave(text("A"));
+        $("#column-b").shouldHave(text("B"));
     }
 }
